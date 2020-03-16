@@ -1,0 +1,59 @@
+import unittest
+import time
+timestr = time.strftime("%y%m%d-%H%M%S")
+from selenium import webdriver
+
+class TestCount(unittest.TestCase):
+    def setUp(self):
+        self.driver = webdriver.Chrome("C:\\Users\\Rukesh\\PycharmProjects\\workshop\\Drivers\\chromedriver.exe")
+        self.driver.get("C:\\Users\\Rukesh\\Desktop\\stp_testing\\democount.html")
+        self.driver.maximize_window()
+        time.sleep(5)
+
+    def test_Countelements(self):
+        c=0
+        c +=1
+        print("heading=",c)
+        textboxes = self.driver.find_elements_by_id("User input")
+        count = 0
+        for i in textboxes:
+            count +=1
+        print("The count of TextBoxes = ",count)
+
+        textattr = self.driver.find_elements_by_name("abc")
+        count = 0
+        for i in textattr:
+          count +=1
+        print("The count of TextBoxes using name attr = ",count)
+        combobox = self.driver.find_elements_by_xpath(".//select")
+        count = 0
+        for i in combobox:
+            count +=1
+        print("The count of Combo Box = ",count)
+        radio = self.driver.find_elements_by_class_name("radioclass")
+        count = 0
+        for i in radio:
+            count +=1
+        print("The count of Radio Buttons = ",count)
+        linktext = self.driver.find_elements_by_xpath(".//a")
+        count = 0
+        for i in linktext:
+            count +=1
+        print("The count of Link Texts = ",count)
+        checkbox = self.driver.find_elements_by_css_selector("input[type='checkbox']")
+        count = 0
+        for i in checkbox:
+            count +=1
+        print("The count of Check Boxes = ",count)
+        tag = self.driver.find_elements_by_tag_name("img")
+        count = 0
+        for i in tag:
+            count +=1
+        print("The count of images = ",count)
+
+
+    def tearDown(self):
+        self.driver.quit()
+
+if __name__ == '__main__':
+    unittest.main()
