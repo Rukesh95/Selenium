@@ -1,0 +1,30 @@
+import unittest
+import time
+timestr = time.strftime("%y%m%d-%H%M%S")
+from selenium import webdriver
+class TestLaunch(unittest.TestCase):
+    def setUp(self):
+        self.driver = webdriver.Chrome("C:\\Users\\Rukesh\\PycharmProjects\\workshop\\Drivers\\chromedriver.exe")
+        self.driver.get("http://172.16.34.16/stp/loginpage.html")
+        self.driver.maximize_window()
+        time.sleep(5)
+        self.driver.save_screenshot("C:\\Users\\Rukesh\\Desktop\\Screenshots\\initial.png")
+    def test_Findclass(self):
+        self.driver.find_element_by_id('User').send_keys('admin')
+        self.driver.find_element_by_id('Pass').send_keys('root123')
+        self.driver.save_screenshot('C:\\Users\\Rukesh\\Desktop\\Screenshotslogincredentials.png')
+        self.driver.save_screenshot("logincredentials" + timestr + ".png")
+        self.driver.find_element_by_css_selector('form#frmlog>input:nth-of-type(2)').click()
+        self.driver.save_screenshot('C:\\Users\\Rukesh\\Desktop\\Screenshots\\success-screen.png')
+        self.driver.get("http://172.16.34.16/stp/loginpage.html")
+        self.driver.find_element_by_id('User').send_keys('administrator')
+        self.driver.find_element_by_id('Pass').send_keys('root123')
+        self.driver.save_screenshot('C:\\Users\\Rukesh\\Desktop\\Screenshots\\wrong-credentials.png')
+        self.driver.find_element_by_css_selector('form#frmlog>input:nth-of-type(1)').click()
+        self.driver.save_screenshot('C:\\Users\\Rukesh\\Desktop\\Screenshotsreset.png')
+        self.assertTrue(self.driver.find_element_by_xpath(".//label"), "Username")
+    def tearDown(self):
+        self.driver.quit()
+if __name__=='__main__':
+    unittest.main()
+
